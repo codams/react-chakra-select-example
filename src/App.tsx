@@ -1,15 +1,13 @@
 import { FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { Controller, useForm } from "react-hook-form";
-import "./styles.css";
 import { ChakraProvider } from "@chakra-ui/react";
 export default function App() {
-  const { handleSubmit, control, getValues } = useForm({
+  const { handleSubmit, control } = useForm({
     defaultValues: {
       select: { value: "02", label: "Deux" },
     },
   });
-  console.log(getValues());
 
   const onSubmit = (data: any) => {
     console.log(data);
@@ -32,10 +30,6 @@ export default function App() {
                       { value: "01", label: "Un" },
                       { value: "02", label: "Deux" },
                     ]}
-                    // value={{ value: "02", label: "Deux" }}
-                    // defaultValue={{ value: "02", label: "Deux" }}
-                    // value={{ value: "02", label: "Deux" }}
-                    // defaultValue={}
                   />
                 )}
               />
