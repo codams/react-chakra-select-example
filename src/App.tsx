@@ -1,50 +1,52 @@
-import { FormControl, FormLabel } from "@chakra-ui/react";
+import { FormControl, FormLabel, Input, VStack } from "@chakra-ui/react";
 import { Select } from "chakra-react-select";
 import { Controller, useForm } from "react-hook-form";
-//import "./styles.css";
-
-const DATA = [
-  { value: "01", label: "un" },
-  { value: "02", label: "deux" }
-];
-
-export const MySelect = ({ control, data }: { control: any; data: [] }) => {
-  return (
-    <FormControl>
-      <FormLabel htmlFor="state">State</FormLabel>
-      {/* https://github.com/csandman/chakra-react-select */}
-      {/* <Select options={statesFormatted} /> */}
-      <Controller
-        name="state"
-        control={control}
-        render={({ field }: { field: any }) => (
-          <Select {...field} options={data} />
-        )}
-      />
-    </FormControl>
-  );
-};
-
-export const MyForm = ({ stateData }: { stateData: any }) => {
-  const { handleSubmit, control } = useForm({
-    defaultValues: { DATA }
+import "./styles.css";
+import { ChakraProvider } from "@chakra-ui/react";
+export default function App() {
+  const { handleSubmit, control, getValues } = useForm({
+    defaultValues: {
+      select: { value: "02", label: "Deux" },
+    },
   });
+  console.log(getValues());
 
   const onSubmit = (data: any) => {
     console.log(data);
   };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <MySelect data={stateData} control={control} />
-    </form>
-  );
-};
+    <ChakraProvider>
+      <div className="App">
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <VStack width={"80%"} marginLeft="10%">
+            <FormControl>
+              <FormLabel htmlFor="state">Select !</FormLabel>
+              {/* https://github.com/csandman/chakra-react-select */}
+              <Controller
+                name="select"
+                control={control}
+                render={({ field }: { field: any }) => (
+                  <Select
+                    {...field}
+                    options={[
+                      { value: "01", label: "Un" },
+                      { value: "02", label: "Deux" },
+                    ]}
+                    // value={{ value: "02", label: "Deux" }}
+                    // defaultValue={{ value: "02", label: "Deux" }}
+                    // value={{ value: "02", label: "Deux" }}
+                    // defaultValue={}
+                  />
+                )}
+              />
+            </FormControl>
 
-export default function App() {
-  return (
-    <div className="App">
-      <MyForm stateData={DATA} />
-    </div>
+            <FormControl paddingTop={6} marginX={10}>
+              <Input id="submit" type="submit" />
+            </FormControl>
+          </VStack>
+        </form>
+      </div>
+    </ChakraProvider>
   );
 }
